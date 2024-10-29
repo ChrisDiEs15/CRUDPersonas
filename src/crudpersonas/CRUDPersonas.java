@@ -15,6 +15,8 @@ public class CRUDPersonas {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        VentanaCrud ventana = new VentanaCrud();
+        ventana.setVisible(true);
     }
     
 }
