@@ -13,12 +13,12 @@ public class Institucion implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer id;
     private String nombre;
-    private String year;
+    private int year;
     private String direccion;
     private String telefono;
     private List<Persona> personas;
 
-    public Institucion(Integer id, String nombre, String year, String direccion, String telefono, List<Persona> personas) {
+    public Institucion(Integer id, String nombre, int year, String direccion, String telefono, List<Persona> personas) {
         this.id = id;
         this.nombre = nombre;
         this.year = year;
@@ -39,7 +39,7 @@ public class Institucion implements Serializable {
         return nombre;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
@@ -64,7 +64,7 @@ public class Institucion implements Serializable {
         this.nombre = nombre;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
