@@ -268,11 +268,13 @@ private void crearPanelPersonas(int numeroPersonas) {
                 // Mostrar mensaje de éxito
                 JOptionPane.showMessageDialog(this, "Persona agregada con éxito.");
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Por favor ingresa una edad válida.");
+                JOptionPane.showMessageDialog(this, "Por favor ingresa los valores correctamente");
             }
         });
 
         // Agregar componentes al panel
+        panelPersonas.add(new JLabel("id:"));
+        panelPersonas.add(inputId);
         panelPersonas.add(new JLabel("Nombre de la Persona " + (i + 1) + ":"));
         panelPersonas.add(inputNombre);
         panelPersonas.add(new JLabel("Apellido Paterno:"));
