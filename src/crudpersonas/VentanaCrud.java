@@ -78,6 +78,7 @@ public class VentanaCrud extends JFrame {
         crearPanelActualizar();
         crearPanelActualizarI();
         crearPanelActualizarP();
+        crearPanelMostrar();
 
         /**/
         // Añadir el panel principal por defecto
@@ -114,7 +115,6 @@ public class VentanaCrud extends JFrame {
         repaint();
     }
 
-    ;
     
     private void mostrarActualizarPer() {
         getContentPane().removeAll(); // Quitar el panel actual
@@ -579,6 +579,53 @@ private void clearFields(JTextField... fields) {
     for (JTextField field : fields) {
         field.setText("");
     }
+}
+
+private void crearPanelMostrar() {
+    panelMostrar = new JPanel();
+    
+    JLabel mostrarTodo = new JLabel("Mostrar todos los datos guardados");
+    JTextArea areaResultado = new JTextArea(30, 30);
+    areaResultado.setEditable(false);
+
+    // Make the text area scrollable by placing it inside a JScrollPane
+    JScrollPane scrollPane = new JScrollPane(areaResultado);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+    JButton botonMostrar = new JButton("Mostrar datos");
+    JButton botonVolver = new JButton("Volver al menú principal");
+
+    // Acciones de los botones
+    botonMostrar.addActionListener((ActionEvent e) -> {
+        StringBuilder resultado = new StringBuilder();
+        List<Integer> institucionIds = crudAcciones.list(); // Assuming you have an instance of CRUDAcciones
+
+        for (Integer id : institucionIds) {
+            Institucion institucion = crudAcciones.select(id); // Retrieve each institution by ID
+            if (institucion != null) {
+                resultado.append(institucion.toString()).append("\n");
+                for (Persona persona : institucion.getPersonas()) {
+                    resultado.append("\t").append(persona.toString()).append("\n");
+                }
+                resultado.append("\n");
+            }
+        }
+
+        areaResultado.setText(resultado.toString()); // Display all results in the text area
+    });
+
+    botonVolver.addActionListener((ActionEvent e) -> {
+        getContentPane().removeAll();
+        add(panelPrincipal);
+        revalidate();
+        repaint();
+    });
+
+    panelMostrar.add(mostrarTodo);
+    panelMostrar.add(scrollPane); // Add the JScrollPane instead of the JTextArea directly
+    panelMostrar.add(botonMostrar);
+    panelMostrar.add(botonVolver);
 }
 
 

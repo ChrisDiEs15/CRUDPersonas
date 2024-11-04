@@ -112,7 +112,7 @@ public class Institucion implements Serializable {
     
      @Override
     public String toString() {
-        return "Album{id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono + ", Personas=" + personas + "}";
+        return "Institucion{id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono + ", Personas=" + personas + "}";
     }
     
     
