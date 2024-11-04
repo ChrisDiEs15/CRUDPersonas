@@ -478,8 +478,108 @@ public class VentanaCrud extends JFrame {
         panelActualizarI.add(botonVolver);
     }
 
-    public void crearPanelActualizarP() {
+    private void crearPanelActualizarP() {
+    panelActualizarP = new JPanel();
+    
 
+    // Labels and text fields
+    JLabel labelIDINS = new JLabel("ID de la institución donde se encuentra la persona:");
+    JTextField inputIDINS = new JTextField(5);
+    
+    JLabel labelId = new JLabel("ID de la persona a actualizar:");
+    JTextField inputId = new JTextField(5);
+    
+    // Fields to display existing person information
+    JLabel labelNombre = new JLabel("Nombre:");
+    JTextField inputNombre = new JTextField(20);
+    
+    JLabel labelaMaterno = new JLabel("Apellido Materno:");
+    JTextField inputaMaterno = new JTextField(20);
+    
+    JLabel labelaPaterno = new JLabel("Apellido paterno:");
+    JTextField inputaPaterno = new JTextField(20);
+    
+    JLabel labelEdad = new JLabel("Edad:");
+    JTextField inputEdad = new JTextField(20);
+    
+    JButton botonBuscar = new JButton("Buscar Persona");
+    JButton botonActualizar = new JButton("Actualizar Persona");
+    JButton botonVolver = new JButton("Volver al menú principal");
+
+    // Action listener for the search button
+    botonBuscar.addActionListener((ActionEvent e) -> {
+        try {
+            int idIns = Integer.parseInt(inputIDINS.getText());
+            int id = Integer.parseInt(inputId.getText());
+            Persona persona = crudAcciones.findPersona(idIns, id); // Method to find the person by ID and institution ID
+            if (persona != null) {
+                // Populate fields with existing information
+                inputNombre.setText(persona.getNombre());
+                inputaPaterno.setText(persona.getaPaterno());
+                inputaMaterno.setText(persona.getaMaterno());
+                inputEdad.setText(String.valueOf(persona.getEdad()));
+            } else {
+                JOptionPane.showMessageDialog(this, "Persona no encontrada en la institución especificada.");
+                clearFields(inputNombre, inputaPaterno, inputaMaterno, inputEdad);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese IDs válidos.");
+            clearFields(inputNombre, inputaPaterno, inputaMaterno, inputEdad);
+        }
+    });
+
+    // Action listener for the update button
+    botonActualizar.addActionListener((ActionEvent e) -> {
+        try {
+            int idIns = Integer.parseInt(inputIDINS.getText());
+            int id = Integer.parseInt(inputId.getText());
+            String nombre = inputNombre.getText();
+            String aPaterno = inputaPaterno.getText();
+            String aMaterno = inputaMaterno.getText();
+            int edad = Integer.parseInt(inputEdad.getText());
+            Persona persona = new Persona(id, nombre, aPaterno, aMaterno, edad); // Assuming a constructor that takes these parameters
+            boolean actualizado = crudAcciones.updatePersona(idIns, id, persona); // Method to update the person's details
+            if (actualizado) {
+                JOptionPane.showMessageDialog(this, "Persona actualizada con éxito.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar la persona.");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese datos válidos.");
+        }
+    });
+
+    // Action listener for the back button
+    botonVolver.addActionListener((ActionEvent e) -> {
+        getContentPane().removeAll();
+        add(panelActualizar);
+        revalidate();
+        repaint();
+    });
+
+    // Add components to the update panel
+    panelActualizarP.add(labelIDINS);
+    panelActualizarP.add(inputIDINS);
+    panelActualizarP.add(labelId);
+    panelActualizarP.add(inputId);
+    panelActualizarP.add(botonBuscar);
+    panelActualizarP.add(labelNombre);
+    panelActualizarP.add(inputNombre);
+    panelActualizarP.add(labelEdad);
+    panelActualizarP.add(inputEdad);
+    panelActualizarP.add(labelaPaterno);
+    panelActualizarP.add(inputaPaterno);
+    panelActualizarP.add(labelaMaterno);
+    panelActualizarP.add(inputaMaterno);
+    panelActualizarP.add(botonActualizar);
+    panelActualizarP.add(botonVolver);
+}
+
+private void clearFields(JTextField... fields) {
+    for (JTextField field : fields) {
+        field.setText("");
     }
+}
+
 
 }
